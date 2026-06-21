@@ -15,10 +15,12 @@ berylRipple.health = 2000;
 berylRipple.targetAir = true;    
 berylRipple.targetGround = true; 
 berylRipple.range = 62 * 8;      
-berylRipple.envEnabled = Env.any; 
 
-// --- ВНЕШНИЙ ВИД И ЭРЕКИР-БАЗА ---
-berylRipple.drawer = new DrawTurret("reinforced-");
+// ИСПРАВЛЕНИЕ 1: Указываем полный путь для Env
+berylRipple.envEnabled = mindustry.world.meta.Env.any; 
+
+// ИСПРАВЛЕНИЕ 2: Указываем полный путь для DrawTurret
+berylRipple.drawer = new mindustry.world.draw.DrawTurret("reinforced-");
 berylRipple.heatColor = Color.valueOf("92dd7e");
 
 // Механика стрельбы от Спектра
@@ -39,16 +41,18 @@ customBeryl.ammoMultiplier = 4;
 customBeryl.shootEffect = Fx.shootBig;
 customBeryl.smokeEffect = Fx.shootBigSmoke;
 
-// Зеленые цвета пули
 customBeryl.frontColor = Color.valueOf("92dd7e"); 
 customBeryl.backColor = Items.beryllium.color;    
 
 berylRipple.ammoTypes.put(Items.beryllium, customBeryl);
 
-// Добавление в древо Эрекира (после Прорыва/Breach)
+// Добавление в древо Эрекира (после Разрыва/Diffuse)
 Events.on(EventType.ContentInitEvent, cons(e => {
-    var parentNode = Blocks.breach.techNode; 
+    var parentNode = Blocks.diffuse.techNode; 
     if (parentNode != null) {
         new TechTree.TechNode(parentNode, berylRipple, berylRipple.researchRequirements());
     }
 }));
+
+// Сообщение для проверки работы скрипта
+print("Beryllium Ripple скрипт успешно загружен!");
